@@ -9,3 +9,24 @@ jar {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter')
 }
+
+
+/**
+ * nexus 관련 (b-module 로컬 nexus 에 업로드)
+ */
+apply plugin: 'maven'
+project.version = '0.0.1'
+project.group = 'io.jmlim.study'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: 'http://localhost:8081/repository/maven-releases/') {
+                authentication(userName: 'admin', password: 'password')
+            }
+            snapshotRepository(url: 'http://localhost:8081/repository/maven-snapshots/') {
+                authentication(userName: 'admin', password: 'password')
+            }
+        }
+    }
+}

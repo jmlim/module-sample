@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '2.2.2.RELEASE'
     }
     repositories {
+        maven { url = "http://localhost:8081/repository/maven-public/" }
         mavenCentral()
     }
     dependencies {
@@ -22,19 +23,22 @@ subprojects {
     sourceCompatibility = 1.8
 
     repositories {
+        /**
+         * nexus 관련 (upload 한 b-module 가져오기)
+         */
+        maven { url = "http://localhost:8081/repository/maven-public/" }
         mavenCentral()
     }
 
-
     task initSourceFolders {
         sourceSets*.java.srcDirs*.each {
-            if( !it.exists() ) {
+            if (!it.exists()) {
                 it.mkdirs()
             }
         }
 
         sourceSets*.resources.srcDirs*.each {
-            if( !it.exists() ) {
+            if (!it.exists()) {
                 it.mkdirs()
             }
         }
@@ -49,6 +53,10 @@ subprojects {
 /* 추 가 */
 project(':a-module') {
     dependencies {
-        compile project(':b-module')
+        /**
+         * nexus 관련 (upload 한 b-module 가져오기)
+         */
+        compile('io.jmlim.study:b-module:0.0.1')
+        //  compile project(':b-module')
     }
 }
